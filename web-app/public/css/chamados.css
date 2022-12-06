@@ -1,0 +1,24 @@
+.div_pai{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 32px;
+}
+
+
+
+#wordcloud img{
+
+    max-width: 100%;
+
+}
+
+#grafico img{
+
+    max-width: 100%;
+
+}
+
+/* #row row_box div_pai{
+    grid-template-columns: 2fr 1fr;
+
+} */

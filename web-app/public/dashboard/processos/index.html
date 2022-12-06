@@ -1,0 +1,266 @@
+<script>
+    try {
+        JSON.parse(sessionStorage.usuario).nome;
+    } catch (error) {
+        window.location = window.origin + '/login';
+    }
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="../../js/funcoes.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SPTrack - Processos</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../../bootstrap/fonts/fontawesome-all.min.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/swal.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+            style="background: var(--bs-accordion-color);padding-bottom: 131px;">
+            <div class="container-fluid d-flex flex-column p-0"><a
+                    class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"><img style="max-width: 80%;padding: 8px 8px 8px 8px;"
+                            src="../../assets/img/logo.png" alt=""></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+
+                    <li class="nav-item"><a class="nav-link" href="../"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../estatisticas/"><i class="fas fa-chart-bar"></i><span>Estatísticas</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../manutencao/"><i class="fas fa-tools"></i><span>Manutenção</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../equipamentos/"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../instituicao/"><i class="fas fa-building"></i><span>Instituição</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../tarefas/"><i class="far fa-clock"></i><span>Tarefas</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../chamados/"><i class="fas fa-info-circle"></i><span>Chamados</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="../processos/"><i class="fas fa-cog"></i><span>Processos</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="../funcionarios/"><i
+                        class="fas fa-user"></i><span>Funcionários</span></a></li>
+
+
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
+                    id="sidebarToggle" type="button" onclick="movaNav()"></button></div>
+        </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
+                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link"
+                                    aria-expanded="false" data-bs-toggle="dropdown" href="#"><i
+                                        class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
+                                    aria-labelledby="searchDropdown">
+                                    <form class="me-auto navbar-search w-100">
+                                        <div class="input-group"><input class="bg-light form-control border-0 small"
+                                                type="text" placeholder="Search for ...">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0"
+                                                    type="button"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
+                                        aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                        <!--<span class="badge bg-danger badge-counter">3+</span>--><i
+                                            class="fas fa-bell fa-fw"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in" id="paiNotificacoes">
+                                        <h6 class="dropdown-header" style="background-color: black;">notificacoes</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" id="span_usuario">Usuário</span><img class="border rounded-circle img-profile" src="../../bootstrap/img/avatars/avatar1.png"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in" onclick="limparSessao()">
+                                        <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Sair</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    <div class="row mb-3">
+                        <div class="col-lg-8">
+                            <div class="row mb-3 d-none">
+                                <div class="col">
+                                    <div class="card text-white bg-primary shadow">
+                                        <div class="card-body">
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <p class="m-0">Peformance</p>
+                                                    <p class="m-0"><strong>65.2%</strong></p>
+                                                </div>
+                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                                            </div>
+                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card text-white bg-success shadow">
+                                        <div class="card-body">
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <p class="m-0">Peformance</p>
+                                                    <p class="m-0"><strong>65.2%</strong></p>
+                                                </div>
+                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                                            </div>
+                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-right: 30%;" >
+                                <div class="col-lg-12 offset-lg-3">
+                                    <div class="card shadow mb-3">
+                                        <div class="card-header py-3">
+                                            <b style="color: Black; " id="titulo">Lista de Processos</b>
+                                        </div>
+                                        <div class="card-body" >
+                                            <form id="listar">
+                                                <div class="row" style="padding-right: 30px;">
+                                                    <div class="col" style="overflow: scroll;width: 215px;height: 181px;">
+                                                        <div class="mb-3"><label class="form-label" for="username"><strong>White List</strong></label></div>
+                                                        <div class="mb-3">
+                                                <table class="table my-0" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tarefa</th>
+                                                            <th>Sistema Operacional</th>
+                                                        </tr>
+                                                    </thead>
+                                    <tbody id="printarProc1">
+                                        </tbody></table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col"  style="overflow: scroll;width: 215px;height: 181px; padding-left: 30px;">
+                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Black List</strong></label></div>
+                                                        <div class="mb-3">
+                                                            <table class="table my-0" >
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Tarefa</th>
+                                                                        <th>Sistema Operacional</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="printarProc2">
+                                                                  
+                                                                </tbody></table>                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                    <!--Inicio cadastro-->
+
+                                            <div id="novo" style="display: none;">
+                                                
+                                                <div id="tipos" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Tipo de processo
+                                                <select class="d-inline-block form-select form-select-sm" id="tipo">
+                                                    <option value="---">---</option>
+                                                    <option value="whitelist">white list</option>
+                                                    <option value="blacklist">black list</option>
+                                                </select>&nbsp;</label></div>
+                                                <div class="col-md-6">
+                                                    <div id="tipos" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Nome do Processo</label></div>
+                                                    <div class="text-md-end dataTables_filter" id="dataTable_filter" style="padding-right: 70%;"><label class="form-label">
+                                                        <input type="text" class="form-control form-control-sm" style="width: 200px;" aria-controls="dataTable" placeholder="nome" id="nameP"></label></div>
+                                                </div><br>
+                                                <div class="col-md-6">
+                                                    <div id="tipos" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Sistema Operacional</label></div>
+                                                    <div class="text-md-end dataTables_filter" id="dataTable_filter" style="padding-right: 70%;"><label class="form-label"><input type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="SO" id="sisop"></label></div>
+                                                </div>
+                                    </div>
+
+                                    <div id="trocaT" style="display: none;">
+                                        <div class="col-md-6">
+                                            <div id="tipos" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Sistema Operacional</label></div>
+                                            <div class="text-md-end dataTables_filter" id="dataTable_filter" style="padding-right: 70%;"><label class="form-label">
+                                                <input type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="SO" id="soT"></label></div>
+                                        </div>        
+                                        <br>
+                                        <div class="col-md-6">
+                                            <div id="tipos" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Nome do Processo</label></div>
+                                            <div class="text-md-end dataTables_filter" id="dataTable_filter" style="padding-right: 70%;" ><label class="form-label">
+                                                <input type="text"  class="form-control form-control-sm" style="width: 200px;" aria-controls="dataTable" placeholder="nome" id="nameT"></label></div>
+                                        </div><br>
+                                                <div id="tipos" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Tipo de processo
+                                                <select class="d-inline-block form-select form-select-sm" id="tipoT">
+                                                    <option value="whitelist">white list</option>
+                                                    <option value="blacklist">black list</option>
+                                                </select>&nbsp;</label></div>
+                                                <input type="text" id="idP" style="display: none;">
+                                                
+                                                
+                                    </div>
+
+                                    <div id="mortos" style="display: none;">
+                                        <div class="col" style="overflow: scroll;width: 700px;height: 181px;padding-left: 10px;">
+                                        <table class="table my-0" id="dataTable" >
+                                            <thead>
+                                                <tr>
+                                                    <th>processo</th>
+                                                    <th>horário finalizado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="printarMortos">
+                                            </tbody></table>
+                                    </div>
+                                </div>
+                                    <br>
+                                    <button class="btn btn-primary btn-sm" type="submit" style="padding-right: 13px;background-color: Black;" onclick="cadastro1()" id="cad1">Cadastrar</button>
+                                    <button class="btn btn-primary btn-sm" type="submit" style="padding-right: 13px;background-color: Black;display: none;" onclick="cadastro2()" id="cad2">Cadastrar</button>
+                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color: Black;margin-left: 2px;" onclick="morto()" id="cad3">Processos mortos</button>
+                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color: Black;margin-left: 2px;display: none;" onclick="voltar()" id="cad4">Listar Processos</button>
+                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color: Black;margin-left: 2px;display: none;" onclick="atualizaLista()" id="cad5">Trocar</button>
+                                    
+
+                                    <!--Fim cadastro-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer" style="position: absolute;bottom:0;left: 50%;">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © SPTrack 2022</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="../../bootstrap/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../bootstrap/js/script.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/dashboard/processos.js"></script>
+</body>
+
+</html>
+
+<script>
+    verifyNav();
+    verificarAcesso(JSON.parse(sessionStorage.usuario).nivelAcesso, 2);
+    // notificacao();
+</script>
